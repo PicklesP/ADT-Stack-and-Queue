@@ -1,41 +1,71 @@
 package cs;
 
-import java.util.LinkedList;
-
 public class StackNode<T> implements StackInterface {
 
-	private final LinkedList ll;
+	private Node topNode;
 	private int numElements;
 	
 	public StackNode(){
-		@SuppressWarnings("unchecked")
-		
+		topNode = null;
 	}
 	
 	@Override
 	public void push(Object newEntry) {
-		// TODO Auto-generated method stub
-		
+		Node newNode;
+		if(isEmpty())
+			newNode = new Node(newEntry);
+		else
+			newNode = new Node(newEntry, topNode);
+		topNode = newNode;
 	}
 	@Override
 	public Object pop() {
-		// TODO Auto-generated method stub
-		return null;
+		if(isEmpty())
+			return null;
+		T obj = (T) topNode.getData();
+		topNode = topNode.getNextNode();
+		return obj;
 	}
 	@Override
 	public Object peek() {
-		// TODO Auto-generated method stub
-		return null;
+		return topNode;
 	}
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return (topNode == null);
 	}
 	@Override
 	public void clear() {
-		// TODO Auto-generated method stub
-		
+		topNode = null;
 	}
-	
+
+	private class Node<T> {
+		private T data;
+		private Node next;
+		
+		public Node(T item, Node nextNode){
+			data = item;
+			next = nextNode;
+		}
+		
+		public Node(T item){
+			this(item, null);
+		}
+		
+		public T getData(){
+			return data;
+		}
+		
+		public void setData(T newData){
+			data = newData;
+		}
+		
+		private Node getNextNode(){
+			return next;
+		}
+		
+		private void setNextNode(Node nextNode){
+			next = nextNode;
+		}
+	}
 }
